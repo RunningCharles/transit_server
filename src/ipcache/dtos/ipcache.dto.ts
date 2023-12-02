@@ -32,4 +32,5 @@ export class IPCacheBody {
   @IsNotEmpty()
   @IsString()
   readonly ip: string;
+  readonly date: string;
 }
