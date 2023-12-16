@@ -47,6 +47,10 @@ export class Message {
 }
 
 export class ChatBody {
+  @IsString()
+  @IsNotEmpty()
+  readonly apikey: string;
+
   @IsEnum(Model)
   readonly model: Model;
 

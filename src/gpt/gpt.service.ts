@@ -25,15 +25,11 @@ import { ChatBody, Message } from 'src/gpt/dtos/gpt.chat.dto';
 
 @Injectable()
 export class GPTService {
-  private readonly gpt = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-    organization: process.env.OPENAI_ORG,
-  });
-
   chat(body: ChatBody): Promise<Message> {
     return new Promise<any>((resolve, _) => {
       Promise.resolve().then(_ => {
-        return this.gpt.chat.completions.create({
+        const client = new OpenAI({ apiKey: body.apikey});
+        return client.chat.completions.create({
           model: body.model,
           messages: body.messages,
           temperature: body.temperature,
