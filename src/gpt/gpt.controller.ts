@@ -17,17 +17,24 @@
 //          ┃ ┫ ┫   ┃ ┫ ┫
 //          ┗━┻━┛   ┗━┻━┛
 //
-//  Created by CharlesChen on 2023/02/10.
+//  Created by CharlesChen on 2023/12/16.
 
-import { IsString } from 'class-validator';
+import { Body, Controller, HttpCode, Post } from '@nestjs/common';
+import { Logger } from 'src/common/logger/logger.service';
+import { GPTService } from 'src/gpt/gpt.service';
+import { ChatBody } from 'src/gpt/dtos/gpt.chat.dto';
 
-export class TestQuery {
-  [key: string]: string;
-  
-  @IsString()
-  readonly func: string;
-}
+@Controller('gpt')
+export class GPTController {
+  private readonly logger = new Logger(GPTController.name);
 
-export class TestBody {
-  [key: string]: string;
+  constructor(private readonly service: GPTService) {}
+
+  @Post('chat')
+  @HttpCode(200)
+  chat(@Body() body: ChatBody): Promise<any>  {
+    this.logger.info('received post request');
+    this.logger.info('body:', body);
+    return this.service.chat(body);
+  }
 }

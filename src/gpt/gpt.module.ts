@@ -17,17 +17,15 @@
 //          ┃ ┫ ┫   ┃ ┫ ┫
 //          ┗━┻━┛   ┗━┻━┛
 //
-//  Created by CharlesChen on 2023/02/10.
+//  Created by CharlesChen on 2023/12/16.
 
-import { IsString } from 'class-validator';
+import { Module } from '@nestjs/common';
+import { GPTController } from 'src/gpt/gpt.controller';
+import { GPTService } from 'src/gpt/gpt.service';
 
-export class TestQuery {
-  [key: string]: string;
-  
-  @IsString()
-  readonly func: string;
-}
-
-export class TestBody {
-  [key: string]: string;
-}
+@Module({
+  imports: [],
+  controllers: [GPTController],
+  providers: [GPTService]
+})
+export class GPTModule {}

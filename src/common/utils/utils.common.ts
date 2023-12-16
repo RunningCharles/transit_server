@@ -18,7 +18,6 @@
 //          ┗━┻━┛   ┗━┻━┛
 //
 //  Created by CharlesChen on 2023/10/27.
-//  Copyright © 2023年 Tencent. All rights reserved.
 
 import { decamelize } from 'humps';
 import { randomUUID } from 'crypto';

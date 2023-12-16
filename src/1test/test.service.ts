@@ -18,7 +18,6 @@
 //          ┗━┻━┛   ┗━┻━┛
 //
 //  Created by CharlesChen on 2023/02/10.
-//  Copyright © 2023年 Tencent. All rights reserved.
 
 import { Injectable } from '@nestjs/common';
 import { Logger } from 'src/common/logger/logger.service';

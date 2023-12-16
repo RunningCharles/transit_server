@@ -18,8 +18,6 @@
 //          ┗━┻━┛   ┗━┻━┛
 //
 //  Created by CharlesChen on 2023/02/10.
-//  Copyright © 2023年 Tencent. All rights reserved.
-
 
 import { Controller, Post, Get, HttpCode, Query, Body } from '@nestjs/common';
 import { IPCacheQuery, IPCacheBody } from 'src/ipcache/dtos/ipcache.dto';

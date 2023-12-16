@@ -18,7 +18,6 @@
 //          ┗━┻━┛   ┗━┻━┛
 //
 //  Created by CharlesChen on 2023/02/10.
-//  Copyright © 2023年 Tencent. All rights reserved.
 
 import { Injectable, Optional } from '@nestjs/common';
 import { configure, getLogger } from 'log4js';
@@ -31,7 +30,7 @@ export const CONSOLE_CONF = {
 export const FILE_CONF = {
   type: 'dateFile',
   filename: 'logs/sophon_radar.log',
-  pattern: "yyyy-MM-dd",
+  pattern: 'yyyy-MM-dd',
   keepFileExt: true,
   alwaysIncludePattern: true,
   backups: 30,

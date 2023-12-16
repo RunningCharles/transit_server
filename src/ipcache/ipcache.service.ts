@@ -18,7 +18,6 @@
 //          ┗━┻━┛   ┗━┻━┛
 //
 //  Created by CharlesChen on 2023/12/02.
-//  Copyright © 2023年 Tencent. All rights reserved.
 
 import * as moment from 'moment';
 import { Injectable } from '@nestjs/common';

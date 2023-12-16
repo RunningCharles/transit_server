@@ -18,8 +18,6 @@
 //          ┗━┻━┛   ┗━┻━┛
 //
 //  Created by CharlesChen on 2023/02/10.
-//  Copyright © 2023年 Tencent. All rights reserved.
-
 
 import { Module } from '@nestjs/common';
 import { TestController } from 'src/1test/test.controller';
