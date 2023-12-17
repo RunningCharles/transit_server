@@ -25,10 +25,14 @@ import { ChatBody, Message } from 'src/gpt/dtos/gpt.chat.dto';
 
 @Injectable()
 export class GPTService {
-  chat(body: ChatBody): Promise<Message> {
+  chat(headers: {[key: string]: string}, body: ChatBody): Promise<Message> {
     return new Promise<any>((resolve, _) => {
       Promise.resolve().then(_ => {
-        const client = new OpenAI({ apiKey: body.apikey});
+        if (typeof headers.authorization !== 'string') {
+          return Promise.reject(new Error('Authorization is invalid'));
+        }
+        const apikey = headers.authorization.replace('Bearer ', '');
+        const client = new OpenAI({apiKey: apikey});
         return client.chat.completions.create({
           model: body.model,
           messages: body.messages,
@@ -36,11 +40,11 @@ export class GPTService {
         });
       }).then(completion => {
         if (!Array.isArray(completion.choices) || completion.choices.length === 0) {
-          return Promise.reject('choices is invalid');
+          return Promise.reject(new Error('choices is invalid'));
         }
         const content = completion.choices[0].message.content;
         if (typeof content !== 'string' || content.length === 0) {
-          return Promise.reject('message is invalid');
+          return Promise.reject(new Error('message is invalid'));
         }
         resolve({code: 0, message: 'OK', data: completion.choices[0].message});
       }).catch(error => {
