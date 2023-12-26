@@ -22,12 +22,12 @@
 import { OpenAI } from 'openai';
 import { Injectable } from '@nestjs/common';
 import { Logger } from 'src/common/logger/logger.service';
-import { ASRBody, ChatBody, TTSBody } from 'src/gpt/dtos/gpt.chat.dto';
+import { ASRBody, ChatBody, GHeaders, TTSBody } from 'src/gpt/dtos/gpt.chat.dto';
 
 @Injectable()
 export class GPTService {
   private readonly logger = new Logger(GPTService.name);
-  chat(headers: {[key: string]: string}, body: ChatBody): Promise<any> {
+  chat(headers: GHeaders, body: ChatBody): Promise<any> {
     return new Promise<any>((resolve, _) => {
       Promise.resolve().then(_ => {
         if (typeof headers.authorization !== 'string') {
@@ -55,7 +55,7 @@ export class GPTService {
     });
   }
 
-  tts(headers: {[key: string]: string}, body: TTSBody): Promise<any> {
+  tts(headers: GHeaders, body: TTSBody): Promise<any> {
     return new Promise<any>((resolve, _) => {
       Promise.resolve().then(_ => {
         if (typeof headers.authorization !== 'string') {
@@ -74,6 +74,7 @@ export class GPTService {
         return body.arrayBuffer();
       }).then(abuffer => {
         const buffer = Buffer.from(abuffer);
+        resolve({code: 0, message: 'OK', data: buffer})
         resolve(buffer)
       }).catch(error => {
         resolve({code: -1, message: error.message});
@@ -81,7 +82,7 @@ export class GPTService {
     });
   }
 
-  asr(headers: {[key: string]: string}, body: ASRBody): Promise<any> {
+  asr(headers: GHeaders, body: ASRBody): Promise<any> {
     return new Promise<any>((resolve, _) => {
       Promise.resolve().then(_ => {
         resolve({code: 0, message: 'OK'});

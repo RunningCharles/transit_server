@@ -26,6 +26,10 @@ import {
   IsNumber, Max, Min, IsOptional,
 } from 'class-validator';
 
+export interface GHeaders {
+  [key: string]: string
+}
+
 export enum ChatRole {
   system    = 'system',
   user      = 'user',
