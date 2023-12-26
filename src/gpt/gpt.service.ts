@@ -21,11 +21,13 @@
 
 import { OpenAI } from 'openai';
 import { Injectable } from '@nestjs/common';
-import { ChatBody, Message } from 'src/gpt/dtos/gpt.chat.dto';
+import { Logger } from 'src/common/logger/logger.service';
+import { ASRBody, ChatBody, TTSBody } from 'src/gpt/dtos/gpt.chat.dto';
 
 @Injectable()
 export class GPTService {
-  chat(headers: {[key: string]: string}, body: ChatBody): Promise<Message> {
+  private readonly logger = new Logger(GPTService.name);
+  chat(headers: {[key: string]: string}, body: ChatBody): Promise<any> {
     return new Promise<any>((resolve, _) => {
       Promise.resolve().then(_ => {
         if (typeof headers.authorization !== 'string') {
@@ -47,6 +49,41 @@ export class GPTService {
           return Promise.reject(new Error('message is invalid'));
         }
         resolve({code: 0, message: 'OK', data: completion.choices[0].message});
+      }).catch(error => {
+        resolve({code: -1, message: error.message});
+      })
+    });
+  }
+
+  tts(headers: {[key: string]: string}, body: TTSBody): Promise<any> {
+    return new Promise<any>((resolve, _) => {
+      Promise.resolve().then(_ => {
+        if (typeof headers.authorization !== 'string') {
+          return Promise.reject(new Error('Authorization is invalid'));
+        }
+        const apikey = headers.authorization.replace('Bearer ', '');
+        const client = new OpenAI({apiKey: apikey});
+        return client.audio.speech.create({
+          model: body.model,
+          input: body.input,
+          voice: body.voice,
+          response_format: body.format,
+          speed: body.speed,
+        });
+      }).then(res => {
+        this.logger.info('res:', res);
+      }).then(_ => {
+        resolve({code: 0, message: 'OK'});
+      }).catch(error => {
+        resolve({code: -1, message: error.message});
+      })
+    });
+  }
+
+  asr(headers: {[key: string]: string}, body: ASRBody): Promise<any> {
+    return new Promise<any>((resolve, _) => {
+      Promise.resolve().then(_ => {
+        resolve({code: 0, message: 'OK'});
       }).catch(error => {
         resolve({code: -1, message: error.message});
       })
