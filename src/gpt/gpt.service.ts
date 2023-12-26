@@ -74,9 +74,7 @@ export class GPTService {
         return body.arrayBuffer();
       }).then(abuffer => {
         const buffer = Buffer.from(abuffer);
-        this.logger.info('buffer:', buffer);
-      }).then(_ => {
-        resolve({code: 0, message: 'OK'});
+        resolve(buffer)
       }).catch(error => {
         resolve({code: -1, message: error.message});
       })
