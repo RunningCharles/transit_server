@@ -70,8 +70,11 @@ export class GPTService {
           response_format: body.format,
           speed: body.speed,
         });
-      }).then(res => {
-        this.logger.info('res:', res);
+      }).then(body => {
+        return body.arrayBuffer();
+      }).then(abuffer => {
+        const buffer = Buffer.from(abuffer);
+        this.logger.info('buffer:', buffer);
       }).then(_ => {
         resolve({code: 0, message: 'OK'});
       }).catch(error => {
